@@ -1,0 +1,112 @@
+package B2B;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import appleOnlinePrices.TestConfig;
+
+
+
+public class DbManager
+{
+	private static Connection con = null;
+	private static Connection conn = null;
+
+	public static void setDbConnection() throws SQLException, ClassNotFoundException
+	{
+		try{
+		Class.forName(TestConfig.driver);
+		con =	DriverManager.getConnection(TestConfig.dbConnectionUrl, TestConfig.dbUserName, TestConfig.dbPassword);
+		
+		if(!con.isClosed())
+			System.out.println("Successfully connected to SQL server");
+			
+	}catch(Exception e){
+		System.err.println("Exception: " + e.getMessage());
+
+		//monitoringMail.sendMail(TestConfig.server, TestConfig.from, TestConfig.to, TestConfig.subject+" - (Script failed with Error, Datamart database used for reports, connection not established)", TestConfig.messageBody, TestConfig.attachmentPath, TestConfig.attachmentName);			
+		}
+		
+		
+	}
+	
+	public static void setMysqlDbConnection() throws SQLException, ClassNotFoundException
+    {
+    try
+    {
+        
+        Class.forName (TestConfig.mysqldriver).newInstance ();
+        conn = DriverManager.getConnection (TestConfig.mysqlurl, TestConfig.mysqluserName, TestConfig.mysqlpassword);
+        if(!conn.isClosed())
+			System.out.println("Successfully connected to MySQL server");
+			
+	
+    }
+    catch (Exception e)
+    {
+        System.err.println ("Cannot connect to database server");
+       
+       // monitoringMail.sendMail(TestConfig.server, TestConfig.from, TestConfig.to, TestConfig.subject+" - (Script failed with Error, Datamart database used for reports, connection not established)", TestConfig.messageBody, TestConfig.attachmentPath, TestConfig.attachmentName);
+    }
+   
+
+}
+	
+	
+	
+	
+		
+	public static List<TestClass> getQuery(String query) throws SQLException{
+		
+		
+		Statement St = con.createStatement();
+		ResultSet rs = St.executeQuery(query);		
+		List<TestClass>table = new ArrayList<TestClass>();
+		while(rs.next()){
+			TestClass data = new TestClass();
+			data.PhoneModelId =rs.getString("PhoneModelId");
+			data.NetworkId=rs.getString("NetworkId");
+			data.ActivityId=rs.getString("ActivityId");
+			data.Value =rs.getString("Value");
+			data.SKU=rs.getString("SKU");
+			//data.PD2_UPC=rs.getString("PD2_UPC");
+			data.Startdate =rs.getString("Startdate");
+			data.enddate=rs.getString("enddate");
+			data.ContactChannelId=rs.getString("ContactChannelId");
+			data.PromoAddition =rs.getString("PromoAddition");
+			data.GrossValue=rs.getString("GrossValue");
+			table.add(data);
+		}
+		return table;
+	}
+	
+	public static List<String> getMysqlQuery(String query) throws SQLException{
+		
+		
+		Statement St = conn.createStatement();
+		ResultSet rs = St.executeQuery(query);
+		List<String> values1 = new ArrayList<String>();
+		while(rs.next()){
+			
+			values1.add(rs.getString(1));
+			
+			
+		}
+		return values1;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static Connection getConnection()
+	{
+		return con;
+			}
+}
+
+
