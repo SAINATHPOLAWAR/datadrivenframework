@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <test name="First class(failed)">
+    <classes>
+      <class name="dd_tests.ValidateIMEI">
+        <methods>
+          <include name="enterIMEI"/>
+          <include name="isskip"/>
+        </methods>
+      </class> <!-- dd_tests.ValidateIMEI -->
+      <class name="dd_tests.InspectionPage">
+        <methods>
+          <include name="init"/>
+          <include name="isskip"/>
+        </methods>
+      </class> <!-- dd_tests.InspectionPage -->
+    </classes>
+  </test> <!-- First class(failed) -->
+  <test name="Second class(failed)">
+    <classes>
+      <class name="dd_tests.ValidateIMEI">
+        <methods>
+          <include name="isskip"/>
+        </methods>
+      </class> <!-- dd_tests.ValidateIMEI -->
+      <class name="dd_tests.InspectionPage">
+        <methods>
+          <include name="init"/>
+          <include name="Inspection"/>
+          <include name="isskip"/>
+        </methods>
+      </class> <!-- dd_tests.InspectionPage -->
+    </classes>
+  </test> <!-- Second class(failed) -->
+</suite> <!-- Failed suite [Suite] -->
